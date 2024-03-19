@@ -1,4 +1,5 @@
 import { $, component$ } from "@builder.io/qwik";
+import { QwikColorful } from "./qwik-color";
 
 interface PanelProps {
   imageState: { roundness: number; size: number; rotation: number };
@@ -13,15 +14,95 @@ interface PanelProps {
     horizontal: boolean;
     direction_reverse: boolean;
   };
-  miscState: { backgroundColor: string };
+  miscState: {
+    backgroundColor: string;
+    paddingX: number;
+    paddingY: number;
+    gap: number;
+  };
 }
 
 export const AdjustPanel = component$<PanelProps>(
   ({ imageState, mainFontState, miscState }) => {
     return (
-      <div class="max-h-[560px] w-full rounded border border-slate-400 bg-slate-900 p-6  overflow-scroll">
+      <div class="max-h-[560px] w-full overflow-scroll rounded border border-slate-400 bg-slate-900 p-6">
         <h3 class="text-2xl font-bold">Adjust</h3>
         <div class="h-full">
+          <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">
+            <span class="font-bold">Misc</span>
+            <div class="flex items-center gap-x-2">
+              <label
+                class="text-xs font-bold text-slate-400"
+                for="misc-paddingX-input"
+              >
+                Padding X
+              </label>
+              <input
+                id="misc-paddingX-input"
+                value={miscState.paddingX}
+                type="range"
+                min={0}
+                max={100}
+                onChange$={$((event: any) => {
+                  miscState.paddingX = Number.parseInt(
+                    (event.target as HTMLInputElement).value,
+                  );
+                })}
+              />
+            </div>
+            <div class="flex items-center gap-x-2">
+              <label
+                class="text-xs font-bold text-slate-400"
+                for="misc-paddingY-input"
+              >
+                Padding Y
+              </label>
+              <input
+                id="misc-paddingY-input"
+                value={miscState.paddingY}
+                type="range"
+                min={0}
+                max={100}
+                onChange$={$((event: any) => {
+                  miscState.paddingY = Number.parseInt(
+                    (event.target as HTMLInputElement).value,
+                  );
+                })}
+              />
+            </div>
+            <div class="flex items-center gap-x-2">
+              <label
+                class="text-xs font-bold text-slate-400"
+                for="misc-gap-input"
+              >
+                Gap
+              </label>
+              <input
+                id="misc-gap-input"
+                value={miscState.gap}
+                type="range"
+                min={0}
+                max={100}
+                onChange$={$((event: any) => {
+                  miscState.gap = Number.parseInt(
+                    (event.target as HTMLInputElement).value,
+                  );
+                })}
+              />
+            </div>
+            <div class="flex items-center gap-x-2">
+              <label
+                class="text-xs font-bold text-slate-400"
+                for="background-color-input"
+              >
+                Background Color
+              </label>
+              <QwikColorful
+                color={miscState.backgroundColor}
+                onChange$={(newColor) => (miscState.backgroundColor = newColor)}
+              />
+            </div>
+          </div>
           <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">
             <span class="font-bold">Image</span>
             <div class="flex items-center gap-x-2">
@@ -55,13 +136,13 @@ export const AdjustPanel = component$<PanelProps>(
                 id="img-rotation-input"
                 value={imageState.rotation}
                 type="range"
-                min={0}
+                min={-180}
                 max={180}
                 onChange$={$((event: any) => {
                   const val = Number.parseInt(
                     (event.target as HTMLInputElement).value,
                   );
-                  imageState.rotation = Math.max(0, Math.min(val, 180));
+                  imageState.rotation = Math.max(-180, Math.min(val, 180));
                 })}
               />
               <input
@@ -69,13 +150,13 @@ export const AdjustPanel = component$<PanelProps>(
                 value={imageState.rotation}
                 type="number"
                 class="h-6 w-16 rounded p-1 text-black"
-                min={0}
+                min={-180}
                 max={180}
                 onChange$={$((event: any) => {
                   const val = Number.parseInt(
                     (event.target as HTMLInputElement).value,
                   );
-                  imageState.rotation = Math.max(0, Math.min(val, 180));
+                  imageState.rotation = Math.max(-180, Math.min(val, -180));
                 })}
               />
             </div>
@@ -111,28 +192,6 @@ export const AdjustPanel = component$<PanelProps>(
                     (event.target as HTMLInputElement).value,
                   );
                   imageState.roundness = Math.max(0, Math.min(val, 100));
-                })}
-              />
-            </div>
-          </div>
-          <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">
-            <span class="font-bold">Misc</span>
-            <div class="flex items-center gap-x-2">
-              <label
-                class="text-xs font-bold text-slate-400"
-                for="background-color-input"
-              >
-                Background Color
-              </label>
-              <input
-                value={miscState.backgroundColor}
-                id="background-color-input"
-                class="h-6 w-12 rounded border border-slate-400 p-1"
-                type="color"
-                onChange$={$((event: any) => {
-                  miscState.backgroundColor = (
-                    event.target as HTMLInputElement
-                  ).value;
                 })}
               />
             </div>
@@ -274,16 +333,9 @@ export const AdjustPanel = component$<PanelProps>(
               >
                 Font Color
               </label>
-              <input
-                value={mainFontState.fontColor}
-                id="font-color-input"
-                type="color"
-                class="h-6 w-12 rounded border border-slate-400 p-1"
-                onChange$={$((event: any) => {
-                  mainFontState.fontColor = (
-                    event.target as HTMLInputElement
-                  ).value;
-                })}
+              <QwikColorful
+                color={mainFontState.fontColor}
+                onChange$={(newColor) => (mainFontState.fontColor = newColor)}
               />
             </div>
             <div class="flex items-center gap-x-2">

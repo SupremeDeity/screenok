@@ -2,31 +2,34 @@ import type { Signal } from "@builder.io/qwik";
 import { $, component$, useSignal, useStore } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
-import testImg from "/test.jpg";
+import testImg from "./Maestro.png";
 import { AdjustPanel } from "~/components/adjust-panel";
 
 export default component$(() => {
   const imgSrc: Signal<string | null> = useSignal(null);
   const mainFontState = useStore({
     hidden: false,
-    rotation: 0,
-    fontSize: 40,
-    fontColor: "#ffffff",
-    fontStyle: "normal",
+    rotation: -3,
+    fontSize: 55,
+    fontColor: "#571818",
+    fontStyle: "lighter",
     underline: false,
     italic: false,
-    horizontal: false,
+    horizontal: true,
     direction_reverse: false,
   });
 
   const imageState = useStore({
-    roundness: 0,
-    size: 70,
-    rotation: 0,
+    roundness: 6,
+    size: 55,
+    rotation: -3,
   });
 
   const miscState = useStore({
-    backgroundColor: "#f3212f",
+    backgroundColor: "#ff9494",
+    paddingX: 0,
+    paddingY: 0,
+    gap: 50,
   });
 
   const changeImgSrc = $((event: any) => {
@@ -45,8 +48,8 @@ export default component$(() => {
         <h6 class="text-xs text-slate-400">Screenshot Mockup</h6>
       </div>
       <div class="flex w-full justify-center gap-x-4 p-4 text-slate-200">
-        <div class="">
-          <div class="rounded border border-slate-400 p-4">
+        <div>
+          <div class="mb-4 h-6 p-4 rounded border border-slate-400">
             <label class="font-bold" for="file-upload">
               Upload Image
             </label>
@@ -60,10 +63,15 @@ export default component$(() => {
           </div>
           <div
             style={{
+              gap: miscState.gap,
+              paddingTop: miscState.paddingY,
+              paddingBottom: miscState.paddingY,
+              paddingLeft: miscState.paddingX,
+              paddingRight: miscState.paddingX,
               backgroundColor: miscState.backgroundColor,
               flexDirection: `${mainFontState.horizontal ? "row" : "column"}${mainFontState.direction_reverse ? "-reverse" : ""}`,
             }}
-            class="flex h-[500px] w-[800px] items-center justify-center overflow-scroll"
+            class="flex border border-slate-400 rounded min-h-[500px] w-[800px] items-center justify-center overflow-hidden"
           >
             <h4
               style={{
@@ -81,17 +89,17 @@ export default component$(() => {
               class="font-bold"
               contentEditable="true"
             >
-              PLACE TEXT
+              MAESTRO
             </h4>
             <div
               style={{
                 width: `${imageState.size}%`,
                 height: `${imageState.size}%`,
               }}
-              class="h-2/3 max-h-full max-w-full"
+              class="max-h-full max-w-full"
             >
               <img
-                src={testImg}
+                src={imgSrc.value ? imgSrc.value : testImg}
                 width={800}
                 height={800}
                 style={{
