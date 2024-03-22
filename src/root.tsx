@@ -22,7 +22,7 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
         <ServiceWorkerRegister />
       </head>
-      <body class="font-sans bg-slate-800" lang="en">
+      <body class="bg-slate-800" lang="en">
         <RouterOutlet />
       </body>
     </QwikCityProvider>

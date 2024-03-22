@@ -1,6 +1,14 @@
 import { component$, Slot } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
 
+// FONTS
+import "@fontsource-variable/inter/wght.css";
+import "@fontsource-variable/cinzel/wght.css";
+import "@fontsource-variable/dancing-script/wght.css";
+import "@fontsource-variable/quicksand/wght.css";
+import '@fontsource-variable/orbitron';
+import '@fontsource-variable/caveat';
+
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
   // https://qwik.builder.io/docs/caching/

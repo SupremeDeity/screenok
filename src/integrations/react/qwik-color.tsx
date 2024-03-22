@@ -41,4 +41,4 @@ function ReactColorful({
   );
 }
 
-export const QwikColorful = qwikify$(ReactColorful, { eagerness: "load" });
+export const QwikColorful = qwikify$(ReactColorful, { eagerness: "hover" });

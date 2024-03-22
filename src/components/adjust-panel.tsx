@@ -1,11 +1,12 @@
 import { $, component$ } from "@builder.io/qwik";
-import { QwikColorful } from "./qwik-color";
+import { QwikColorful } from "../integrations/react/qwik-color";
 
 interface PanelProps {
   imageState: { roundness: number; size: number; rotation: number };
   mainFontState: {
     rotation: number;
     hidden: boolean;
+    font: string;
     fontSize: number;
     fontColor: string;
     fontStyle: string;
@@ -24,6 +25,14 @@ interface PanelProps {
 
 export const AdjustPanel = component$<PanelProps>(
   ({ imageState, mainFontState, miscState }) => {
+    const fontList = [
+      "Quicksand",
+      "Inter",
+      "Dancing Script",
+      "Cinzel",
+      "Orbitron",
+      "Caveat",
+    ];
     return (
       <div class="max-h-[560px] w-full overflow-scroll rounded border border-slate-400 bg-slate-900 p-6">
         <h3 class="text-2xl font-bold">Adjust</h3>
@@ -264,6 +273,31 @@ export const AdjustPanel = component$<PanelProps>(
                   );
                 })}
               />
+            </div>
+            <div class="flex items-center gap-x-4">
+              <div>
+                <label
+                  class="mr-2 text-xs font-bold text-slate-400"
+                  for="font-input"
+                >
+                  Font
+                </label>
+                <select
+                  id="font-input"
+                  class="rounded border border-slate-400 bg-transparent p-1"
+                  value={mainFontState.font}
+                  name="font"
+                  onChange$={(ev) =>
+                    (mainFontState.font = (ev.target as HTMLInputElement).value)
+                  }
+                >
+                  {fontList.map((font, index) => (
+                    <option selected={index === 0} key={font} value={font}>
+                      {font}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div class="flex items-center gap-x-4">
               <div>

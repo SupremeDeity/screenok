@@ -1,36 +1,39 @@
 import type { Signal } from "@builder.io/qwik";
 import { $, component$, useSignal, useStore } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import html2canvas from "html2canvas";
 
-import testImg from "./Maestro.png";
 import { AdjustPanel } from "~/components/adjust-panel";
 
 export default component$(() => {
   const imgSrc: Signal<string | null> = useSignal(null);
   const mainFontState = useStore({
     hidden: false,
-    rotation: -3,
+    rotation: 0,
     fontSize: 55,
+    font: "Quicksand",
     fontColor: "#571818",
-    fontStyle: "lighter",
+    fontStyle: "normal",
     underline: false,
     italic: false,
-    horizontal: true,
+    horizontal: false,
     direction_reverse: false,
   });
 
   const imageState = useStore({
-    roundness: 6,
-    size: 55,
-    rotation: -3,
+    roundness: 0,
+    size: 60,
+    rotation: 0,
   });
 
   const miscState = useStore({
     backgroundColor: "#ff9494",
     paddingX: 0,
     paddingY: 0,
-    gap: 50,
+    gap: 0,
   });
+
+  const canvasRef: Signal<any> = useSignal();
 
   const changeImgSrc = $((event: any) => {
     const imageFiles = event.target.files;
@@ -49,19 +52,29 @@ export default component$(() => {
       </div>
       <div class="flex w-full justify-center gap-x-4 p-4 text-slate-200">
         <div>
-          <div class="mb-4 h-6 p-4 rounded border border-slate-400">
-            <label class="font-bold" for="file-upload">
-              Upload Image
-            </label>
-            <input
-              class="hidden"
-              accept="image/*"
-              type="file"
-              id="file-upload"
-              onChange$={changeImgSrc}
-            />
-          </div>
+          <button
+          class="border p-2 rounded border-slate-400 mb-4"
+            onClick$={() => {
+              html2canvas(canvasRef.value).then(function (canvas) {
+                const url = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.download = `screenok-${(+new Date).toString(36)}.png`;
+                link.href = url;
+                link.click();
+              });
+            }}
+          >
+            SAVE
+          </button>
+          <input
+            class="hidden"
+            accept="image/*"
+            type="file"
+            id="file-upload"
+            onChange$={changeImgSrc}
+          />
           <div
+            ref={canvasRef}
             style={{
               gap: miscState.gap,
               paddingTop: miscState.paddingY,
@@ -71,7 +84,7 @@ export default component$(() => {
               backgroundColor: miscState.backgroundColor,
               flexDirection: `${mainFontState.horizontal ? "row" : "column"}${mainFontState.direction_reverse ? "-reverse" : ""}`,
             }}
-            class="flex border border-slate-400 rounded min-h-[500px] w-[800px] items-center justify-center overflow-hidden"
+            class="flex min-h-[500px] w-[800px] items-center justify-center overflow-hidden"
           >
             <h4
               style={{
@@ -85,29 +98,33 @@ export default component$(() => {
                   mainFontState.fontStyle === "lighter" ? "0.0001px" : "auto",
                 textDecorationColor: mainFontState.fontColor,
                 rotate: `${mainFontState.rotation}deg`,
+                fontFamily: `${mainFontState.font} Variable`,
               }}
               class="font-bold"
               contentEditable="true"
             >
-              MAESTRO
+              PLACE TEXT
             </h4>
-            <div
-              style={{
-                width: `${imageState.size}%`,
-                height: `${imageState.size}%`,
-              }}
-              class="max-h-full max-w-full"
-            >
-              <img
-                src={imgSrc.value ? imgSrc.value : testImg}
-                width={800}
-                height={800}
-                style={{
-                  rotate: `${imageState.rotation}deg`,
-                  borderRadius: imageState.roundness,
-                }}
-              />
-            </div>
+            <label class="cursor-pointer" for="file-upload">
+              {imgSrc.value ? (
+                <img
+                  src={imgSrc.value}
+                  width={800}
+                  height={800}
+                  class="mx-auto block"
+                  style={{
+                    rotate: `${imageState.rotation}deg`,
+                    borderRadius: imageState.roundness,
+                    width: `${imageState.size}%`,
+                    height: `${imageState.size}%`,
+                  }}
+                />
+              ) : (
+                <div class="flex size-64 items-center justify-center rounded bg-slate-300 text-xl font-bold uppercase text-black">
+                  Upload an image
+                </div>
+              )}
+            </label>
           </div>
         </div>
         <AdjustPanel
