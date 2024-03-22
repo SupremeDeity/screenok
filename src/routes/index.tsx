@@ -97,7 +97,7 @@ export default component$(() => {
                 textDecorationThickness:
                   mainFontState.fontStyle === "lighter" ? "0.0001px" : "auto",
                 textDecorationColor: mainFontState.fontColor,
-                rotate: `${mainFontState.rotation}deg`,
+                transform: `rotate(${mainFontState.rotation}deg)`,
                 fontFamily: `${mainFontState.font} Variable`,
               }}
               class="font-bold"
@@ -113,7 +113,7 @@ export default component$(() => {
                   height={800}
                   class="mx-auto block"
                   style={{
-                    rotate: `${imageState.rotation}deg`,
+                    transform: `rotate(${imageState.rotation}deg)`,
                     borderRadius: imageState.roundness,
                     width: `${imageState.size}%`,
                     height: `${imageState.size}%`,
