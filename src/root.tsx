@@ -20,21 +20,35 @@ export default component$(() => {
       <head>
         <meta charSet="utf-8" />
         <title>Screenok</title>
-        <meta
-          name="description"
-          content="Create mockups from your screenshots"
-        />
+        <meta name="description" content="Generate Screenshot Mockups." />
+
+        <meta property="og:url" content="https://screenok.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Screenok" />
-        <meta property="og:url" content="https://screenok.vercel.app" />
-        <meta
-          property="og:image"
-          content="https://screenok.vercel.app/og.svg"
-        />
         <meta
           property="og:description"
           content="Generate Screenshot Mockups."
         />
+        <meta
+          property="og:image"
+          content="https://screenok.vercel.app/og.svg"
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="screenok.vercel.app" />
+        <meta property="twitter:url" content="https://screenok.vercel.app/" />
+        <meta name="twitter:title" content="Screenok" />
+        <meta
+          name="twitter:description"
+          content="Generate Screenshot Mockups."
+        />
+        <meta
+          name="twitter:image"
+          content="https://screenok.vercel.app/og.svg"
+        />
+
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="400" />
         <link rel="manifest" href="/manifest.json" />
         <ServiceWorkerRegister />
       </head>
