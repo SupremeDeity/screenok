@@ -61,7 +61,6 @@ export default component$(() => {
               onClick$={() => {
                 html2canvas(canvasRef.value, {
                   backgroundColor: "null",
-                  removeContainer: false,
                 }).then(function (canvas) {
                   const url = canvas.toDataURL("image/png");
                   const link = document.createElement("a");
@@ -102,6 +101,7 @@ export default component$(() => {
               style={{
                 display: mainFontState.hidden ? "none" : "block",
                 fontSize: mainFontState.fontSize,
+                lineHeight: `${mainFontState.fontSize}px`,
                 color: mainFontState.fontColor,
                 fontStyle: mainFontState.italic ? "italic" : "normal",
                 fontWeight: mainFontState.fontStyle,
