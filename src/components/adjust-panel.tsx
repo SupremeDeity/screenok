@@ -42,7 +42,7 @@ export const AdjustPanel = component$<PanelProps>(
       "Caveat",
     ];
     return (
-      <div class="max-h-[560px] w-full overflow-scroll rounded border border-slate-400 bg-slate-900 p-6">
+      <div class="max-h-[560px] w-[300px] overflow-scroll rounded border border-slate-400 bg-slate-900 p-6">
         <h3 class="text-2xl font-bold">Adjust</h3>
         <div class="h-full">
           <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">

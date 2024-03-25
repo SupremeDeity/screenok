@@ -53,11 +53,11 @@ export default component$(() => {
         <h1 class="text-xl text-slate-200">Screenok</h1>
         <h6 class="text-xs text-slate-400">Screenshot Mockup</h6>
       </div>
-      <div class="flex w-full justify-center gap-x-4 p-2 text-slate-200">
+      <div class="flex w-full h-full justify-evenly items-center gap-x-4 p-2 text-slate-200">
         <div>
           <div class="mb-2 flex items-center gap-x-4">
             <button
-              class="rounded border border-slate-400 bg-slate-600 p-1.5 text-xs font-bold hover:bg-slate-600/80"
+              class="rounded border border-slate-400 bg-slate-900 p-1.5 text-xs font-bold hover:bg-slate-600/80"
               onClick$={() => {
                 html2canvas(canvasRef.value, {
                   backgroundColor: "null",
