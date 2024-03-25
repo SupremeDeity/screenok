@@ -24,6 +24,9 @@ export default component$(() => {
     roundness: 0,
     size: 60,
     rotation: 0,
+    borderEnabled: false,
+    borderColor: "#000000",
+    borderWidth: 2,
   });
 
   const miscState = useStore({
@@ -52,7 +55,7 @@ export default component$(() => {
       </div>
       <div class="flex w-full justify-center gap-x-4 p-2 text-slate-200">
         <div>
-          <div class="flex items-center gap-x-4 mb-2">
+          <div class="mb-2 flex items-center gap-x-4">
             <button
               class="rounded border border-slate-400 bg-slate-600 p-1.5 text-xs font-bold hover:bg-slate-600/80"
               onClick$={() => {
@@ -120,12 +123,16 @@ export default component$(() => {
                   src={imgSrc.value}
                   width={800}
                   height={800}
-                  class="mx-auto block"
+                  class="mx-auto block border"
                   style={{
                     transform: `rotate(${imageState.rotation}deg)`,
                     borderRadius: imageState.roundness,
                     width: `${imageState.size}%`,
                     height: `${imageState.size}%`,
+                    borderColor: `${imageState.borderColor}`,
+                    borderWidth: imageState.borderEnabled
+                      ? `${imageState.borderWidth}px`
+                      : "0px",
                   }}
                 />
               ) : (

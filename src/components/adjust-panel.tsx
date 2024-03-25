@@ -3,7 +3,14 @@ import { QwikColorful } from "../integrations/react/qwik-color";
 import { Select } from "./select";
 
 interface PanelProps {
-  imageState: { roundness: number; size: number; rotation: number };
+  imageState: {
+    roundness: number;
+    size: number;
+    rotation: number;
+    borderColor: string;
+    borderWidth: number;
+    borderEnabled: boolean;
+  };
   mainFontState: {
     rotation: number;
     hidden: boolean;
@@ -111,7 +118,6 @@ export const AdjustPanel = component$<PanelProps>(
                 color={miscState.backgroundColor}
                 onChange$={(newColor) => (miscState.backgroundColor = newColor)}
               />
-              
             </div>
           </div>
           <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">
@@ -206,6 +212,75 @@ export const AdjustPanel = component$<PanelProps>(
                 })}
               />
             </div>
+            <div class="flex items-center gap-x-2">
+              <label
+                class="mr-2 text-xs font-bold text-slate-400"
+                for="image-borderEnabled-input"
+              >
+                Border
+              </label>
+              <input
+                id="image-borderEnabled-input"
+                checked={imageState.borderEnabled}
+                type="checkbox"
+                onChange$={$(() => {
+                  imageState.borderEnabled = !imageState.borderEnabled;
+                })}
+              />
+            </div>
+            {imageState.borderEnabled && (
+              <>
+                <div class="flex items-center gap-x-2">
+                  <label
+                    class="text-xs font-bold text-slate-400"
+                    for="img-borderColor-input"
+                  >
+                    Border Color
+                  </label>
+                  <QwikColorful
+                    color={imageState.borderColor}
+                    onChange$={(newColor) =>
+                      (imageState.borderColor = newColor)
+                    }
+                  />
+                </div>
+                <div class="flex items-center gap-x-2">
+                  <label
+                    class="text-xs font-bold text-slate-400"
+                    for="img-borderWidth-input"
+                  >
+                    Border Width
+                  </label>
+                  <input
+                    id="img-borderWidth-input"
+                    value={imageState.borderWidth}
+                    type="range"
+                    min={0}
+                    max={100}
+                    onChange$={$((event: any) => {
+                      const val = Number.parseInt(
+                        (event.target as HTMLInputElement).value,
+                      );
+                      imageState.borderWidth = Math.max(0, Math.min(val, 100));
+                    })}
+                  />
+                  <input
+                    id="image-borderWidth-input"
+                    value={imageState.borderWidth}
+                    type="number"
+                    class="h-6 w-16 rounded p-1 text-black"
+                    min={0}
+                    max={100}
+                    onChange$={$((event: any) => {
+                      const val = Number.parseInt(
+                        (event.target as HTMLInputElement).value,
+                      );
+                      imageState.borderWidth = Math.max(0, Math.min(val, 100));
+                    })}
+                  />
+                </div>
+              </>
+            )}
           </div>
           <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">
             <span class="font-bold">Text</span>
