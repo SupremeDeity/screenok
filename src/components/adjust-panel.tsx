@@ -1,5 +1,6 @@
 import { $, component$ } from "@builder.io/qwik";
 import { QwikColorful } from "../integrations/react/qwik-color";
+import { Select } from "./select";
 
 interface PanelProps {
   imageState: { roundness: number; size: number; rotation: number };
@@ -110,6 +111,7 @@ export const AdjustPanel = component$<PanelProps>(
                 color={miscState.backgroundColor}
                 onChange$={(newColor) => (miscState.backgroundColor = newColor)}
               />
+              
             </div>
           </div>
           <div class="mt-6 flex flex-col gap-y-4 rounded border border-slate-400 p-4">
@@ -282,9 +284,8 @@ export const AdjustPanel = component$<PanelProps>(
                 >
                   Font
                 </label>
-                <select
+                <Select
                   id="font-input"
-                  class="rounded border border-slate-400 bg-transparent p-1"
                   value={mainFontState.font}
                   name="font"
                   onChange$={(ev) =>
@@ -292,11 +293,16 @@ export const AdjustPanel = component$<PanelProps>(
                   }
                 >
                   {fontList.map((font, index) => (
-                    <option selected={index === 0} key={font} value={font}>
+                    <option
+                      class="bg-slate-800"
+                      selected={index === 0}
+                      key={font}
+                      value={font}
+                    >
                       {font}
                     </option>
                   ))}
-                </select>
+                </Select>
               </div>
             </div>
             <div class="flex items-center gap-x-4">
@@ -307,9 +313,8 @@ export const AdjustPanel = component$<PanelProps>(
                 >
                   Style
                 </label>
-                <select
+                <Select
                   id="font-style-input"
-                  class="rounded border border-slate-400 bg-transparent p-1"
                   value={mainFontState.fontStyle}
                   name="fontStyle"
                   onChange$={(ev) =>
@@ -323,7 +328,7 @@ export const AdjustPanel = component$<PanelProps>(
                     Normal
                   </option>
                   <option value="bold">Bold</option>
-                </select>
+                </Select>
               </div>
             </div>
             <div class="flex items-center gap-x-2">

@@ -50,22 +50,31 @@ export default component$(() => {
         <h1 class="text-xl text-slate-200">Screenok</h1>
         <h6 class="text-xs text-slate-400">Screenshot Mockup</h6>
       </div>
-      <div class="flex w-full justify-center gap-x-4 p-4 text-slate-200">
+      <div class="flex w-full justify-center gap-x-4 p-2 text-slate-200">
         <div>
-          <button
-          class="border p-2 rounded border-slate-400 mb-4"
-            onClick$={() => {
-              html2canvas(canvasRef.value).then(function (canvas) {
-                const url = canvas.toDataURL("image/png");
-                const link = document.createElement("a");
-                link.download = `screenok-${(+new Date).toString(36)}.png`;
-                link.href = url;
-                link.click();
-              });
-            }}
-          >
-            SAVE
-          </button>
+          <div class="flex items-center gap-x-4 mb-2">
+            <button
+              class="rounded border border-slate-400 bg-slate-600 p-1.5 text-xs font-bold hover:bg-slate-600/80"
+              onClick$={() => {
+                html2canvas(canvasRef.value, {
+                  backgroundColor: "null",
+                  removeContainer: false,
+                }).then(function (canvas) {
+                  const url = canvas.toDataURL("image/png");
+                  const link = document.createElement("a");
+                  link.download = `screenok-${(+new Date()).toString(36)}.png`;
+                  link.href = url;
+                  link.click();
+                });
+              }}
+            >
+              SAVE
+            </button>
+            <span class="rounded border border-slate-400 bg-slate-600 p-1.5 text-xs font-bold">
+              Semi-transparent colors will be affected by the site's background
+              color in this preview.
+            </span>
+          </div>
           <input
             class="hidden"
             accept="image/*"
